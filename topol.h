@@ -366,7 +366,25 @@ float sqDistance(point p0, point p1)
 
 
 
-
+/**
+ * @brief Represents a 2D direction vector (tangent) used in polygon shaping and circle geometry.
+ *
+ * The tangent class models a 2D direction based on a slope and quadrant system.
+ * It provides geometric operations such as rotation, interpolation, and transformation,
+ * which are used to build and manipulate smooth curves between points in the diagram.
+ *
+ * Internally, directions are encoded using a `slope` and a `quadrant` (1 to 4), which
+ * allows handling of vertical and horizontal directions without infinite slopes.
+ *
+ * Key methods:
+ * - `transformPoint()` moves a point along the tangent by a given distance.
+ * - `rotate()` adjusts the direction relative to another tangent.
+ * - `bisect()` and `leftIntermediate()` compute smoothed or averaged directions.
+ * - Operator overloads allow for combining, comparing, and manipulating directions.
+ *
+ * This class is essential in shaping the borders of Venn diagram regions,
+ * especially during polish and embellish phases.
+ */
 class tangent {
   float slope;
   UINT quadrant;
@@ -2185,13 +2203,25 @@ class borderLine
       /* */
     }
 
-
-    /** \brief Fix topology by excluding circles from improper borderlines
+    
+    /**
+     * @brief Repairs the topology of each borderline to ensure proper containment of circles.
      *
-     * \param false bool logit= Whether the function should log operations.
-     *        Ignored if DEBUG is undef.
-     * \return void
+     * This function iterates over each borderline (i.e., polygonal approximation of a region)
+     * and ensures that it only surrounds the circles it is meant to represent.
+     * If a borderline improperly intersects a circle that does not belong to it,
+     * a corrective detour is inserted into the polygon to route around the circle.
+     * 
+     * For each borderline:
+     * - It scans all unvisited circles to detect incorrect containment using `circleTopol`.
+     * - When an error is found, it finds the best segment of the polygon to split.
+     * - It computes a set of new points that curve around the misplaced circle.
+     * - The detour is inserted, and the process is repeated if needed.
      *
+     * After all borderlines are corrected, a final smoothing pass is performed
+     * via `embellishTopology()`.
+     *
+     * @param logit If true, log messages are produced during correction (only if DEBUG is defined).
      */
     void fixTopology(bool logit = false){
       addLines();
@@ -2563,12 +2593,21 @@ class borderLine
 
 
 
-    /** \brief Adds group lines
+    /**
+     * @brief Builds initial polygonal borderlines for each logical region in the Venn diagram.
      *
-     * \return void
+     * This function constructs rough outlines (`bl`) for each region by checking which
+     * circles belong to it. For each group, it creates a polygon that surrounds the
+     * relevant circles using basic geometric approximations.
      *
+     * These borderlines may initially overlap or include unwanted areas. They are usually
+     * refined afterward using `polishLines()` to smooth the shape, and `fixTopology()` to
+     * correct topological errors like enclosing the wrong circles.
+     *
+     * This step sets up the base geometry from which all regions are formed.
+     * 
      */
-    void addLines(bool logit = false){
+    void addLines(){
       /*for (UINT i = 0; i < circles.size(); i++){
         scircles[circles[i].n] = circles[i];
       }*/
@@ -2611,11 +2650,21 @@ class borderLine
     }
 
 
-    /** \brief Take the lines generated with @addLines and set the points to the
-     *         outside of each circle.
+    /**
+     * @brief Refines the polygonal borderlines to improve shape and spacing around circles.
      *
-     * \return void
+     * This function smooths and adjusts each region outline (`bl`) by modifying its points
+     * based on nearby geometry. For regions with only one point, a small square is generated
+     * around the center to form a minimal boundary.
      *
+     * For general polygons, it loops through each point and, when it corresponds to a circle,
+     * inserts several auxiliary points around it:
+     * - A backward offset point, moving away from the previous segment.
+     * - Three arc points, positioned using interpolated tangents between the previous and next segments.
+     * - A forward offset point, moving in the direction of the next segment.
+     *
+     * These adjustments improve the overall visual flow of the region, avoid sharp corners,
+     * and help later steps like `fixTopology()` work more reliably.
      */
     void polishLines(){
       tangent rev(1, 0);
@@ -2628,7 +2677,7 @@ class borderLine
           tangent up(0, 1);
           point current = bl[i][0];
           UINT n = current.n;
-          point p1 = rev.transformPoint(current, current.radius);
+          point p1 = rev.transformPoint(current, current.radius);Yes
           p1.flags = setFlag(p1.flags, DO_NOT_EMBELLISH);
           p1.n = n;
           point p2 = dwn.transformPoint(current, current.radius);
@@ -3162,6 +3211,24 @@ class borderLine
       return 0;
     }
 
+    /**
+     * @brief Optimizes the compactness of the current diagram layout by iteratively swapping circles.
+     *
+     * This function tries to improve the layout's compactness by swapping circle positions
+     * and evaluating a compactness metric provided by the `countFunct` member function.
+     * It also uses a secondary tiebreaking function (`untieFunct`) when two layouts yield
+     * the same compactness score.
+     *
+     * The optimization is guided by an `optimizationStep` controller, which keeps track of
+     * the best candidate found so far and decides when to continue or restart the search.
+     *
+     * @param opt Pointer to an optimization controller that manages iteration and state.
+     * @param chooseCandidate A member function that selects the next circle index to try.
+     * @param countFunct A member function that computes the compactness metric for the layout.
+     * @param untieFunct A member function used to break ties when compactness values are equal.
+     * @param logit If true, enables debug logging (only active if DEBUG is defined).
+     * @return The best compactness score found at this point in the search.
+     */
     float outCompactness(optimizationStep *opt, UINT (borderLine::*chooseCandidate)(),
                          float (borderLine::*countFunct)(), float (borderLine::*untieFunct)(),
                          bool logit = false){
