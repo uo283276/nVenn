@@ -1284,7 +1284,7 @@ class decider{
   UINT mincycles;
   float totalCompactness;
   float lastCompactness;
-  float bestUntie;
+  //float bestUntie;
   float wRoom;
   bool keep;
 public:
@@ -1638,7 +1638,7 @@ class borderLine
           l << "\n";
         }
         //tolog(toString(__LINE__) + "\n" + l.str());
-        
+
 
         //totalExpectedSurface = 0;
         //for (i = 0; i < w.size(); i++){
@@ -4612,7 +4612,7 @@ void writeFileText(fileText* tmp, std::string fname = ""){
 }
 
 public:
-    borderLine(){}
+    borderLine(){fromSignature = false;}
     borderLine(std::string description, UINT bycol = 0, const char lineSep = 0x00, std::string fname = "nvenn.txt", std::string outputFile = "result.svg"){
         fromSignature = false;
         setElements = nvenn(description, lineSep, bycol);
@@ -4797,10 +4797,6 @@ public:
     void setGravityPartitions(){
       std::vector<std::vector<UINT>> gp;
       std::vector<std::vector<UINT>> cs;
-      UINT nels = circles.size();
-      for (UINT i = 0; i < bl.size(); i++){
-        nels += bl[i].size();
-      }
       for (UINT i = 0; i < sceneTranslator.size(); i++){
         if (sceneTranslator[i] > 0){
           std::vector<UINT> t;
@@ -4810,7 +4806,6 @@ public:
         }
       }
       gp.clear();
-      UINT counter = 0;
       for (UINT i = 0; i < bl.size(); i++){
         for (UINT k = 0; k < bl[i].size(); k++){
           for (UINT j = 0; j < circles.size(); j++){
@@ -4825,7 +4820,6 @@ public:
                   found = true;
                   tn = tmp[1];
                 }
-                counter++;
               }
               if (!found){
                 setError("Error in scene translation");
@@ -4833,7 +4827,6 @@ public:
               gp.push_back({counter, tn});
             }
           }
-          counter++;
         }
       }
       /*for (UINT i = 0; i < gp.size(); i++){
@@ -5179,12 +5172,12 @@ public:
       std::string st = "<desc id=\'result\'>";
       std::string nd = "</desc>";
       std::string result = "";
-      UINT cstart = ft.find(st);
+      size_t cstart = ft.find(st);
       if (cstart == std::string::npos){
         setError("Cannot find coordinates");
       }
       else{
-        UINT cnd = ft.find(nd, cstart);
+        size_t cnd = ft.find(nd, cstart);
         if (cnd > cstart && cnd != std::string::npos){
           UINT a = cstart + st.length();
           UINT b = cnd - a;
@@ -6179,13 +6172,12 @@ public:
               bl[i][j].y = q[1].y;
             }
           }
-          UINT counter = 0;
           UINT lastConserved = 0;
           for (UINT j = 0; j < bl[i].size() - 2; j++){
             float d = distance(bl[i][lastConserved].x, bl[i][lastConserved].y, bl[i][j+1].x, bl[i][j+1].y);
             if (d < (md)){
               bl[i][j].flags = bl[i][j].flags | DELME;
-              counter++;
+              //counter++;
               //tolog("Distance between " + toString(lastConserved) + " and " +
               //      toString(j+1) + " is " + toString(d) + "\n");
               //bl[i].erase(bl[i].begin() + j+ 1);
