@@ -33,6 +33,7 @@ public:
     void addText(std::string t){
         text << t;
     }
+    //TODO: eliminar
     void clearText()
     {
         text.clear();

@@ -132,6 +132,8 @@ public:
     void setCustom(UINT val){
       custom = val;
     }
+
+    //TODO: eliminar
     UINT getCustom(){
       return custom;
     }
@@ -261,6 +263,7 @@ class scene{
     }
   }
 
+  //TODO: eliminar
   void effectOther(){
 
   }
@@ -352,6 +355,8 @@ class scene{
       }
     }
   }
+
+  //TODO: eliminar
   void rodback(point *p0, point *p1, float eqd, int neg = 1){
     point result;
     float springK = rodStiffness;
@@ -447,7 +452,7 @@ class scene{
       }
       return result;
   }
-  void rope(point *circ, UINT nspring, point *p0, point *p1, int neg = 1)
+  void rope(point *circ, UINT nspring, point *p0, point *p1)
     {
       if (circ->radius == 0){
         return;
@@ -500,6 +505,8 @@ class scene{
         }
     }
   }
+
+  //TODO: eliminar
   UINT convertLinkCoordinates(UINT i, UINT j) {
     UINT a = i < j ? i : j;
     UINT b = i < j ? j : i;
@@ -714,6 +721,7 @@ public:
   void setBackgroundGravity(bool sg = true){
       backgroundGravity = sg;
   }
+  //TODO: eliminar
   void setDebugSignal(){
     debugSignal = true;
   }
@@ -750,6 +758,7 @@ public:
   void setG(float gravity = 0){
     G = gravity;
   }
+  //TODO: eliminar
   void setDown(float gaccel = 0){
     g = gaccel;
   }
@@ -760,9 +769,11 @@ public:
   void setDampingConstant(float dmp = 0){
     damp = dmp;
   }
+  //TODO: eliminar 
   bool dumpme(){
     return dump;
   }
+  //TODO: eliminar
   void dumpthis(){
     dump = true;
   }
@@ -790,10 +801,12 @@ public:
   float getMaxVsq(){
     return maxvsq;
   }
+  //TODO: eliminar
   std::vector<point> getVirtual(){
     std::vector<point> result = virtualPoints;
     return result;
   }
+  //TODO: eliminar
   void clearVirtual(){
     virtualPoints.clear();
   }
@@ -809,6 +822,7 @@ public:
     shadowPoints.push_back(*p);
     points.push_back(p);
   }
+  //TODO: eliminar
   void doSomething(){
     points[0]->x += 10;
   }
@@ -818,6 +832,7 @@ public:
    * \return void
    *
    */
+  //TODO: eliminar
   void gsave(){
     std::vector<point> cp;
     for (UINT i = 0; i < points.size(); i++){
@@ -926,7 +941,7 @@ public:
   void setRodStiffness(float stf = 1e4){
     rodStiffness = stf;
   }
-
+  //TODO: eliminar
   bool addRod(UINT from, UINT to, float d = 0){
     bool result = false;
     if (from != to &&

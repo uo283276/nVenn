@@ -27,7 +27,7 @@
 
 
 
-
+//FIXME: eliminar
 std::string buildTw(std::string signat){
   std::string r;
   std::vector<std::string> rgroups;
@@ -72,6 +72,7 @@ void printv(std::vector<UINT> v)
     std::cout << std::endl;
 }
 */
+//FIXME: eliminar
 void vlog(std::vector<UINT> v){
   if (v.size() > 0){
     for (UINT i = 0; i < (v.size() - 1); i++){
@@ -113,6 +114,7 @@ bool isNAN(float n){
  * \return float
  *
  */
+//FIXME: eliminar
 float sprod(std::vector<float> a, std::vector<float> b)
 {
     float result;
@@ -124,7 +126,7 @@ float sprod(std::vector<float> a, std::vector<float> b)
     }
     return result;
 }
-
+//FIXME: eliminar
 std::vector<float> arr2vec(float arr[], int n)
 {
     int i;
@@ -178,6 +180,7 @@ std::vector<int> toBin(int number, UINT nBits = 0)
  * \return int
  *
  */
+//FIXME: eliminar
 int toInt(std::vector<int> v)
 {
     // Takes a std::vector containing the binary representation
@@ -323,6 +326,7 @@ public:
   UINT val(){
     return cval;
   }
+  //FIXME: eliminar
   std::string croak(){
     std::ostringstream r;
     r << "Mask: " << mask << std::endl;
@@ -414,6 +418,7 @@ public:
   tangent(point p1, point p2){
     init(p1, p2);
   }
+  //FIXME: eliminar
   bool error(){
     return err;
   }
@@ -626,6 +631,7 @@ class timeMaster{
       reports.push_back(0);
     }
   }
+  //FIXME: eliminar
   void setDt(UINT level){
     if (level < times.size()){
       reset();
@@ -705,7 +711,7 @@ public:
             return false;
         }
     }
-
+    //FIXME: eliminar?
     bool isMin()
     {
       if (toInf) return false;
@@ -966,7 +972,7 @@ public:
 };
 
 
-
+//FIXME: eliminar
 template<typename T>
 void _D_(std::vector<T> v, std::string sep=""){
   std::string r;
@@ -1005,6 +1011,7 @@ typedef struct{
   UINT nextVertex;
 } outsiderInfo;
 
+//FIXME: eliminar
 void oilog(outsiderInfo oi){
   tolog(_L_ + "Vertex: " + toString(oi.vertex) + "\nNextVertex: " + toString(oi.nextVertex) + "\n");
 }
@@ -1055,6 +1062,7 @@ public:
   void setUntie(){
     untied = true;
   }
+  //FIXME: eliminar
   bool hasUntied(){
     bool result = untied;
     untied = false;
@@ -1080,7 +1088,7 @@ class binMap
     int ngroups;
     std::vector<std::vector<int> > column;
     std::vector<std::vector<std::vector<int> > > row;
-
+    //TODO: change documentation
     signed int firstUnmatched1(std::vector<int> v)
     {
         /***********************************************************
@@ -1252,7 +1260,7 @@ public:
         }
     }*/
 };
-
+//FIXME: eliminar
 bool outsorter(outsiderInfo a, outsiderInfo b){
   if (a.vertex != b.vertex){
     return (a.vertex < b.vertex);
@@ -1800,7 +1808,7 @@ class borderLine
           if (circRadii[j] > 0 && circRadii[j] > maxRadius) maxRadius = circRadii[j];
         }
     }
-
+//FIXME: eliminar
 /*
     void setCirclesOld(binMap b, std::vector<float> o, std::vector<std::string> tlabels)
     {
@@ -1895,7 +1903,7 @@ class borderLine
       }
 
     }
-
+//FIXME: eliminar
 /*
     void setPoints(UINT ngroup)
     {
@@ -2386,7 +2394,7 @@ class borderLine
       //writeSVG("embellish.svg");
     }
 
-
+    //FIXME: eliminar
     /** \brief Fix topology by excluding circles from improper borderlines
      *
      * \param false bool logit= Whether the function should log operations.
@@ -2877,7 +2885,7 @@ class borderLine
       q.push_back(r);
       return q;
     }
-
+    //FIXME: eliminar
     UINT chooseCombination(bool logit = false){
       std::vector<point> backup = circles;
       std::vector<point> best   = circles;
@@ -2940,7 +2948,7 @@ class borderLine
     /***********************/
     /* Extensive search    */
     /***********************/
-
+    //FIXME: eliminar
     void chooseCrossings(bool logit = false){
       fixTopology();
       UINT bc = countCrossings();
@@ -2985,7 +2993,7 @@ class borderLine
       }
       return bestcross;
     }
-
+    //FIXME: eliminar
     void chooseCompact(bool logit = false){
       float best = compactness();
       float newc = setCompact();
@@ -3052,7 +3060,7 @@ class borderLine
     /* Metropolis-Hastings */
     /***********************/
 
-
+    //FIXME: eliminar
     /** \brief Look for the best combination compactness
      *  using a Metropolis-Hastings-like algorithm
      *
@@ -3096,7 +3104,7 @@ class borderLine
       }
       return bestCompactness;
     }
-
+    //FIXME: eliminar
     float MHCrosses(){
       UINT nstep = 2; // Number of circles exchanged in each step
       UINT maxSteps = 10000;
@@ -3224,7 +3232,7 @@ class borderLine
       //tolog("CNext: " + toString(circles[result].n) + "\n");
       return result;
     }
-
+    //FIXME: eliminar
     float doNothing(){
       return 0;
     }
@@ -3290,7 +3298,7 @@ class borderLine
       }
       return opt->getBestCompactness();
     }
-
+    //FIXME: eliminar
     UINT outCrosses(optimizationStep *opt, bool logit = false){
       UINT candidate = furthestPoint();
       fixTopology();
@@ -3320,7 +3328,7 @@ class borderLine
     /***********************/
     /*/Restrict to outliers*/
     /***********************/
-
+    //FIXME: eliminar
     UINT setCrossingsBack(bool logit = false){
       addLines();
       polishLines();
@@ -3376,7 +3384,7 @@ class borderLine
     }
 
 
-
+    //FIXME: eliminar
     /*point contact(point &p0, point &p1, float hardness = 5e3f){
         point result;
         point zero;
@@ -3417,7 +3425,7 @@ class borderLine
             return zero;
         }
     }*/
-
+    //FIXME: eliminar
     void writeCoords(){
         std::ofstream result;
         std::string outputFigData = blSettings.fname + ".data";
@@ -3627,7 +3635,7 @@ class borderLine
             return zero;
         }
     }
-
+    //FIXME: eliminar
     void setRadii(){
       UINT i, j;
       for (i = 0; i < bl.size(); i++){
@@ -3643,7 +3651,7 @@ class borderLine
         deciderCounter.setAsStable();
       }
     }
-
+    //FIXME: eliminar
     void setForces1()
     {
         UINT i, j;
@@ -3664,7 +3672,7 @@ class borderLine
             }
         }
     }
-
+    //FIXME: eliminar
     void setCircleAttraction(float G = 1e-5){
       float minDist = 4 * maxRad(); //  * sqrt((float) circles.size());
       for (UINT i = 0; i < (circles.size() - 1); i++){
@@ -3675,7 +3683,7 @@ class borderLine
         }
       }
     }
-
+    //FIXME: eliminar
     void setGravityForces(){
       for (UINT i = 0; i < bl.size(); i++){
         for (UINT j = 0; j < bl[i].size(); j++){
@@ -3828,7 +3836,7 @@ class borderLine
       bool result = prev & next;
       return result;
     }
-
+    //FIXME: eliminar
     void setForces3()
     {
         UINT i, j, k;
@@ -3895,7 +3903,7 @@ class borderLine
       }
       return result;
     }
-
+    //FIXME: eliminar
     void setForces2()
     {
         UINT i, j, k;
@@ -3941,6 +3949,7 @@ class borderLine
                 }
             }
         }
+        //FIXME: eliminar
         /** Circle-circle
         for (i = 0; i < circles.size() - 1; i++){
           float tmp = circles[i].radius;
@@ -4439,7 +4448,7 @@ class borderLine
 
       return result;
     }
-
+    //FIXME: eliminar
     void showCrossings(){
       std::vector<std::vector<point>> useme = bl;
       // Unembellish
@@ -4648,7 +4657,7 @@ public:
 
         /*writeSVG()*/
     }
-
+    //FIXME: eliminar
     UINT getCurrentStep(){
         return currentStep;
     }
@@ -5040,14 +5049,15 @@ public:
       keepDistCounter++;
       blSettings.ncycles++;
     }
+    //FIXME: eliminar
     void scSave(std::string fname = ""){
       tosolve.saveScene();
     }
-
+    //FIXME: eliminar
     std::string scCroack(){
       return tosolve.croack();
     }
-
+    //FIXME: eliminar
     /** \brief Set baseBV (Reference friction coefficient)
      *
      * \param bv float New value (5.0 by default)
@@ -5057,6 +5067,7 @@ public:
     void setBV(float bv){
       blSettings.baseBV = bv;
     }
+    //FIXME: eliminar
     /** \brief Set the function to compute contacts
      *
      * \param f UINT 0 means contact(); 1 means contact2()
@@ -5084,6 +5095,7 @@ public:
       }
       return result;
     }
+    //FIXME: eliminar
     void setSoftContact(bool soft = false){
       blSettings.softcontact = soft;
     }
@@ -5109,7 +5121,7 @@ public:
     float maxRad(){
       return maxRadius;
     }
-
+    //FIXME: eliminar
     bool isThisTheEnd(){
       return blSettings.signalEnd;
     }
@@ -5379,11 +5391,11 @@ public:
       }
       return result;
     }
-
+    //FIXME: eliminar
     void clearWarnings(){
       warn.clear();
     }
-
+    //FIXME: eliminar
     std::vector<point> getWarnings(){
       std::vector<point> result = warn;
       return result;
@@ -5445,11 +5457,11 @@ public:
 
 
 
-
+    //FIXME: eliminar
     bool doIShowThis(){
         return showThis;
     }
-
+    //FIXME: eliminar
     /** \brief Get isolated SVG code
      *  Similar to `toSVG()`, but adds a unique id that serves to isolate the SVG code.
      *  This way, several svgs can coexist in the same web page.
@@ -5688,7 +5700,7 @@ public:
       svg.addLine("</svg>");
       return svg;
     }
-
+    //FIXME: eliminar
     fileText toPS()
     {
         fileText pstext;
@@ -5880,7 +5892,7 @@ public:
         pstext.addLine("showpage");
         return pstext;
     }
-
+    //FIXME: eliminar
     std::string tohtml(){
       return toHTML().getText();
     }
@@ -6244,7 +6256,7 @@ public:
       avgStartDist = pDist;
       attachScene();
     }
-
+    //FIXME: eliminar
     void interpolate(UINT npoints)
     {
         UINT i, j, k;
@@ -6299,6 +6311,7 @@ public:
         writeFileText(&tmp, fname);
 
     }
+    //FIXME: eliminar
     void writeHTML(std::string fname = ""){
         //std::cout << "Writing to " << fname << std::endl;
         fileText tmp = toHTML();
@@ -6337,7 +6350,7 @@ public:
       error = true;
       errorMessage = msg;
     }
-
+    //FIXME: eliminar
     void loadSignature(std::string sig){
       sig = exchangeChar(sig, '\n', 0x00);
       bl.clear();
@@ -6664,10 +6677,11 @@ public:
       refreshScreen++;
       return result;
     }
+    //FIXME: eliminar
     bool refresh(){
       return refreshScreen.isMax();
     }
-
+    //FIXME: eliminar
     void rotateScene(float alpha){
       centerScene();
       float cosa = std::cos(alpha);
@@ -6707,66 +6721,68 @@ public:
             colors.push_back(toRGB(arr[i], 1));
         }
     }
-
+    //FIXME: eliminar
     void setRGBColor(UINT setNumer, UINT red, UINT green, UINT blue){
         std::vector<UINT> c = {red, green, blue};
         setSVGColor(setNumer, c);
     }
-
+    //FIXME: eliminar
     void setVennColor(UINT setNumber, std::string svgColor){
       svgParams.svgColors[setNumber] = svgColor;
     }
-
+    //FIXME: eliminar
     void setSVGOpacity(float t){
         svgParams.svgOpacity = t;
     }
-
+    //FIXME: eliminar
     void setSVGLineWidth(float lw){
         svgParams.svgLineWidth = lw;
     }
-
+    //FIXME: eliminar
     void showCircleNumbers(bool s){
         svgParams.showNumbers = s;
     }
+      //FIXME: eliminar
     void showRegionNumbers(bool s){
         svgParams.showRegionNumbers = s;
     }
+    //FIXME: eliminar
     void setFontSize(UINT fs){
         svgParams.svgFontSize = fs;
     }
-
+    //FIXME: eliminar
     std::string getVennRegion(UINT r){
         std::vector<std::string> s = setElements.getRegion(r);
         std::string result = join("\n", s);
         return result;
     }
-
+    //FIXME: eliminar
     std::string getVennRegion(std::vector<std::string> r){
         std::vector<std::string> s = setElements.getRegion(r);
         std::string result = join("\n", s);
         return result;
     }
-
+    //FIXME: eliminar
     std::vector<std::string> getVennRegionVector(UINT r){
         std::vector<std::string> s = setElements.getRegion(r);
         return s;
     }
-
+    //FIXME: eliminar
     std::vector<std::string> getVennRegionVectorL(std::vector<std::string> r){
         std::vector<std::string> s = setElements.getRegion(r);
         return s;
     }
 
     /** @} */
-
+    //FIXME: eliminar
     std::vector<std::vector<point>> getBl(){
         return bl;
     }
-
+    //FIXME: eliminar
     std::vector<std::string> getSetNames(){
         return groups;
     }
-
+    //FIXME: eliminar
     std::string regionDescription(UINT nreg){
       std::vector<std::string> r;
       for (UINT i = 0; i < groups.size(); i++){
@@ -6779,7 +6795,7 @@ public:
       return result;
     }
 
-
+    //FIXME: eliminar
     bool simulate(bool verbose = false){
       restart_log();
       reset();
@@ -6814,13 +6830,13 @@ borderLine fromSets(std::string sets, UINT byCol){
     borderLine result(sets, byCol);
     return result;
 }
-
+//FIXME: eliminar
 borderLine fromSetFile(std::string filepath, UINT byCol = 0x00){
     std::string nfo = getFileText(filepath);
     borderLine result = fromSets(nfo, byCol);
     return result;
 }
-
+//FIXME: eliminar
 borderLine fromPrevRun(std::string filename){
   borderLine result;
   result.restoreFromFile(filename);
@@ -6890,7 +6906,7 @@ borderLine getInfoFromStream(std::stringstream& vFile, const char lineSep = 0x00
   //}
 }
 
-
+//FIXME: eliminar
 borderLine getFileInfo(std::string fname, std::string outputFile){
     std::ifstream vFile;
     vFile.open(fname.c_str());

@@ -313,6 +313,7 @@ public:
    * \return std::string Elements in the region, separated with a newline
    *
    */
+  // TODO: eliminar
   std::string region(UINT n){
       std::vector<std::string> v = getRegion(n);
       std::string r = join("\n", v);
@@ -473,6 +474,7 @@ public:
       return result;
   }
 
+  //TODO: eliminar
   std::string getInfo(){
     return warnings.str();
     warnings.clear();
